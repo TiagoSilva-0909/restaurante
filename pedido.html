@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Pedidos de Lanches</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #fffb00;
+    }
+    h1 {
+      color: #d35400;
+    }
+    .menu, .pedido {
+      background-color: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #219150;
+    }
+    .hidden {
+      display: none;
+    }
+    #qrcode, #thanks {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🍔 Faça seu Pedido</h1>
+
+  <div class="menu">
+    <h2>Menu de Lanches</h2>
+    <label><input type="checkbox" value="Hambúrguer clássico"> Hambúrguer clássico - R$22,00</label><br>
+    <label><input type="checkbox" value="Barca de fritas"> Barca de fritas - R$15,00</label><br>
+    <label><input type="checkbox" value="Combo Família "> Combo Família - R$20,00</label><br>
+    <label><input type="checkbox" value="X-calabreza"> X-calabreza-R$25,00</label><br>
+    <label><input type="checkbox" value="pizza Vegana"> pizza Vegana-R$25,00</label><br>
+    <label><input type="checkbox" value="Nuggets Crocantes"> Nuggets Crocantes-R$14,00,00</label><br>
+    <label><input type="checkbox" value="Coxinha de frango"> Coxinha de frango-R$10,00</label><br>
+    <label><input type="checkbox" value=" Cheeseburger Duplo"> Cheeseburger Duplo-R$30,00</label><br>
+    <label><input type="checkbox" value="RotDog"> RotDog-R$25,00</label><br>
+    <label><input type="checkbox" value="X-Calota"> X-Calota-R$35,00</label><br>
+
+
+    <button onclick="fazerPedido()">Fazer Pedido</button>
+  </div>
+
+  <div class="pedido hidden" id="resumoPedido">
+    <h2>Resumo do Pedido</h2>
+    <ul id="itensPedido"></ul>
+    <button onclick="mostrarQRCode()">Pagar</button>
+  </div>
+
+  <div id="qrcode" class="hidden">
+    <h2>📱 Escaneie o QR Code para pagar</h2>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?data=Pagamento%20Lanches&size=200x200" alt="QR Code"><br>
+    <button onclick="confirmarPagamento()">Confirmar Pagamento</button>
+  </div>
+
+  <div id="thanks" class="hidden">
+    <h2>✅ Obrigado pela compra!</h2>
+  </div>
+
+  <script>
+    function fazerPedido() {
+      const checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+      const itensPedido = document.getElementById('itensPedido');
+      itensPedido.innerHTML = '';
+
+      if (checkboxes.length === 0) {
+        alert('Por favor, selecione ao menos um item.');
+        return;
+      }
+
+      checkboxes.forEach(cb => {
+        const li = document.createElement('li');
+        li.textContent = cb.value;
+        itensPedido.appendChild(li);
+      });
+
+      document.getElementById('resumoPedido').classList.remove('hidden');
+    }
+
+    function mostrarQRCode() {
+      document.getElementById('qrcode').classList.remove('hidden');
+    }
+
+    function confirmarPagamento() {
+      document.getElementById('qrcode').classList.add('hidden');
+      document.getElementById('thanks').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
